@@ -1,6 +1,5 @@
 """Представления Django"""
 import re
-from typing import Any
 
 from django.core.cache import caches
 from django.http import JsonResponse
@@ -8,10 +7,11 @@ from rest_framework.decorators import api_view
 from rest_framework.exceptions import NotFound, ValidationError
 from rest_framework.request import Request
 
-from app.settings import CACHE_WEATHER
+from app.settings import CACHE_WEATHER, CACHE_CURRENCY
 from geo.serializers import CountrySerializer, CitySerializer
 from geo.services.city import CityService
 from geo.services.country import CountryService
+from geo.services.currency import CurrencyService
 from geo.services.shemas import CountryCityDTO
 from geo.services.weather import WeatherService
 
@@ -142,5 +142,22 @@ def get_weather(request: Request, alpha2code: str, city: str) -> JsonResponse:
 
 
 @api_view(["GET"])
-def get_currency(*args: Any, **kwargs: Any) -> None:
-    pass
+def get_currency(request: Request, currency: str) -> JsonResponse:
+    """
+    Получение информации о погоде в указанном городе.
+
+    :param Request request: Объект запроса
+    :param str currency: базовая валюта
+    :return:
+    """
+
+    cache_key = f"currency_{currency}_info"
+    data = caches[CACHE_CURRENCY].get(cache_key)
+    if not data:
+        if data := CurrencyService().get_currency(base=currency):
+            caches[CACHE_CURRENCY].set(cache_key, data)
+
+    if data:
+        return JsonResponse(data)
+
+    raise NotFound

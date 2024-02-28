@@ -1,6 +1,14 @@
-from django.urls import path
+from django.conf import settings
+from django.urls import path, include
 
-from geo.views import get_city, get_cities, get_countries, get_country, get_weather
+from geo.views import (
+    get_city,
+    get_cities,
+    get_countries,
+    get_country,
+    get_weather,
+    get_currency,
+)
 
 urlpatterns = [
     path("city", get_cities, name="cities"),
@@ -8,4 +16,12 @@ urlpatterns = [
     path("country", get_countries, name="countries"),
     path("country/<str:name>", get_country, name="country"),
     path("weather/<str:alpha2code>/<str:city>", get_weather, name="weather"),
+    path("currency/<str:currency>", get_currency, name="currency"),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns += [
+        path("__debug__/", include(debug_toolbar.urls)),
+    ]

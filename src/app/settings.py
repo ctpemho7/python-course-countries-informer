@@ -215,3 +215,26 @@ API_KEY_OPENWEATHER = env("API_KEY_OPENWEATHER")
 API_KEY_NEWSAPI = env("API_KEY_NEWSAPI")
 # таймаут запросов на внешние ресурсы
 REQUESTS_TIMEOUT = env.int("REQUESTS_TIMEOUT")
+
+
+if DEBUG:
+    INSTALLED_APPS += [
+        "debug_toolbar",
+    ]
+    MIDDLEWARE += [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    ]
+    INTERNAL_IPS = [
+        "127.0.0.1",
+        "localhost",
+        "172.20.0.6",
+    ]
+    DEBUG_TOOLBAR_CONFIG = {
+        "SHOW_TOOLBAR_CALLBACK": lambda request: True,
+    }
+    REST_FRAMEWORK = {
+        "DEFAULT_RENDERER_CLASSES": [
+            "rest_framework.renderers.JSONRenderer",
+            "rest_framework.renderers.BrowsableAPIRenderer",
+        ]
+    }
