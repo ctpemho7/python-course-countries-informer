@@ -8,11 +8,11 @@ from rest_framework.exceptions import NotFound, ValidationError
 from rest_framework.request import Request
 
 from app.settings import CACHE_WEATHER, CACHE_CURRENCY
-from geo.serializers import CountrySerializer, CitySerializer
+from geo.serializers import CountrySerializer, CitySerializer, WeatherSerializer, CurrencyRatesSerializer
 from geo.services.city import CityService
 from geo.services.country import CountryService
 from geo.services.currency import CurrencyService
-from geo.services.shemas import CountryCityDTO
+from geo.services.shemas import CountryCityDTO, WeatherDTO
 from geo.services.weather import WeatherService
 
 
@@ -136,8 +136,9 @@ def get_weather(request: Request, alpha2code: str, city: str) -> JsonResponse:
             caches[CACHE_WEATHER].set(cache_key, data)
 
     if data:
-        return JsonResponse(data)
-
+        weather_info = WeatherDTO(**data)
+        serializer = WeatherSerializer(weather_info)
+        return JsonResponse(serializer.data, safe=False)
     raise NotFound
 
 
