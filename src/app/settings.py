@@ -217,6 +217,11 @@ API_KEY_NEWSAPI = env("API_KEY_NEWSAPI")
 REQUESTS_TIMEOUT = env.int("REQUESTS_TIMEOUT")
 
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 2,
+}
+
 if DEBUG:
     INSTALLED_APPS += [
         "debug_toolbar",
@@ -232,9 +237,8 @@ if DEBUG:
     DEBUG_TOOLBAR_CONFIG = {
         "SHOW_TOOLBAR_CALLBACK": lambda request: True,
     }
-    REST_FRAMEWORK = {
-        "DEFAULT_RENDERER_CLASSES": [
+    REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = [
             "rest_framework.renderers.JSONRenderer",
             "rest_framework.renderers.BrowsableAPIRenderer",
-        ]
-    }
+    ]
+
