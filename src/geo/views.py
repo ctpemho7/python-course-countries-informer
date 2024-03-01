@@ -17,7 +17,7 @@ from geo.serializers import (
 from geo.services.city import CityService
 from geo.services.country import CountryService
 from geo.services.currency import CurrencyService
-from geo.services.shemas import CountryCityDTO, WeatherDTO
+from geo.services.shemas import CountryCityDTO
 from geo.services.weather import WeatherService
 
 
@@ -141,8 +141,7 @@ def get_weather(request: Request, alpha2code: str, city: str) -> JsonResponse:
             caches[CACHE_WEATHER].set(cache_key, data)
 
     if data:
-        weather_info = WeatherDTO(**data)
-        serializer = WeatherSerializer(weather_info)
+        serializer = WeatherSerializer(data)
         return JsonResponse(serializer.data, safe=False)
     raise NotFound
 
