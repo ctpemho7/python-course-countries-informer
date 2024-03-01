@@ -128,15 +128,11 @@ class WeatherSerializer(serializers.Serializer):
         return validated_data
 
 
-# сериализаторы данных о валюте
-class RateSerializer(serializers.Serializer):
-    currency = serializers.CharField()
-    rate = serializers.FloatField()
+class CurrencySerializer(serializers.Serializer):
+    """
+    Cериализатор данных о валюте.
+    """
 
-
-class CurrencyRatesSerializer(serializers.Serializer):
-    success = serializers.BooleanField()
-    timestamp = serializers.IntegerField()
     base = serializers.CharField()
     date = serializers.DateField()
-    rates = serializers.ListSerializer(child=RateSerializer())
+    rates = serializers.DictField()
