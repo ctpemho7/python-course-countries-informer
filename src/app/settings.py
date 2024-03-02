@@ -162,9 +162,12 @@ BROKER_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/"
 CACHE_TTL_CURRENCY_RATES: int = int(os.getenv("CACHE_TTL_CURRENCY_RATES", "86_400"))
 # время актуальности данных о погоде (в секундах), по умолчанию ~ три часа
 CACHE_TTL_WEATHER: int = int(os.getenv("CACHE_TTL_WEATHER", "10_700"))
+# время актуальности данных о новостях (в секундах), по умолчанию - час
+CACHE_TTL_NEWS: int = int(os.getenv("CACHE_TTL_WEATHER", "3_600"))
 
 CACHE_WEATHER = "cache_weather"
 CACHE_CURRENCY = "cache_currency"
+CACHE_NEWS = "cache_news"
 CACHES = {
     # общий кэш приложения
     "default": {
@@ -187,6 +190,14 @@ CACHES = {
         "KEY_PREFIX": "currency",
         "OPTIONS": {"db": "2"},
         "TIMEOUT": CACHE_TTL_CURRENCY_RATES,
+    },
+    # кэширование данных о новостях
+    CACHE_NEWS: {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": BROKER_URL,
+        "KEY_PREFIX": "news",
+        "OPTIONS": {"db": "3"},
+        "TIMEOUT": CACHE_TTL_NEWS,
     },
 }
 
@@ -215,3 +226,28 @@ API_KEY_OPENWEATHER = env("API_KEY_OPENWEATHER")
 API_KEY_NEWSAPI = env("API_KEY_NEWSAPI")
 # таймаут запросов на внешние ресурсы
 REQUESTS_TIMEOUT = env.int("REQUESTS_TIMEOUT")
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+}
+
+if DEBUG:
+    INSTALLED_APPS += [
+        "debug_toolbar",
+    ]
+    MIDDLEWARE += [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    ]
+    INTERNAL_IPS = [
+        "127.0.0.1",
+        "localhost",
+        "172.20.0.6",
+    ]
+    DEBUG_TOOLBAR_CONFIG = {
+        "SHOW_TOOLBAR_CALLBACK": lambda request: True,
+    }
+    REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = [
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ]

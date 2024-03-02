@@ -1,3 +1,4 @@
+"""Сериализаторы приложения geo"""
 from rest_framework import serializers
 
 from geo.models import Country, City
@@ -47,3 +48,26 @@ class CitySerializer(serializers.ModelSerializer):
             "longitude",
             "country",
         ]
+
+
+class WeatherSerializer(serializers.Serializer):
+    """
+    Сериализатор данных о погоде.
+    """
+
+    temp = serializers.FloatField()
+    pressure = serializers.IntegerField()
+    humidity = serializers.IntegerField()
+    visibility = serializers.IntegerField()
+    wind_speed = serializers.FloatField()
+    description = serializers.CharField()
+
+
+class CurrencySerializer(serializers.Serializer):
+    """
+    Cериализатор данных о валюте.
+    """
+
+    base = serializers.CharField()
+    date = serializers.DateField()
+    rates = serializers.DictField()

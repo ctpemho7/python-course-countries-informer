@@ -1,3 +1,4 @@
+"""Конфигурация приложения news"""
 from django.apps import AppConfig
 
 

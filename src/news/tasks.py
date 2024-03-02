@@ -1,3 +1,4 @@
+"""Задачи для Celery"""
 import logging
 
 from celery import shared_task
