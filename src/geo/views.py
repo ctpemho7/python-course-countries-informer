@@ -5,9 +5,7 @@ from django.core.cache import caches
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import NotFound, ValidationError
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.request import Request
-from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
 from app.settings import CACHE_WEATHER, CACHE_CURRENCY
@@ -24,6 +22,7 @@ from geo.services.shemas import CountryCityDTO
 from geo.services.weather import WeatherService
 
 paginator = api_settings.DEFAULT_PAGINATION_CLASS()
+paginator.page_size = 2
 
 
 @api_view(["GET"])
