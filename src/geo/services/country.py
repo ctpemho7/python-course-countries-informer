@@ -1,3 +1,4 @@
+"""Сервисный слой для работы с данными о странах."""
 from typing import Optional, Dict
 
 from django.db.models import Q, QuerySet

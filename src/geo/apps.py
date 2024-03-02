@@ -1,3 +1,4 @@
+"""Конфигурация приложения geo"""
 from django.apps import AppConfig
 
 

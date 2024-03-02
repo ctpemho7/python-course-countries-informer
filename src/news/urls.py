@@ -1,3 +1,4 @@
+"""Конфигурация url приложения news"""
 from django.urls import path
 
 from news.views import get_news

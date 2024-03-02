@@ -1,4 +1,4 @@
-"""Представления Django"""
+"""Представления Django для новостей"""
 from django.core.cache import caches
 from django.http import JsonResponse
 from rest_framework.decorators import api_view

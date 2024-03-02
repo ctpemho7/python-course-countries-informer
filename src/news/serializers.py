@@ -1,3 +1,4 @@
+"""Сериализаторы приложения news"""
 from rest_framework import serializers
 
 

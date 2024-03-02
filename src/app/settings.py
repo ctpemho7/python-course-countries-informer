@@ -229,7 +229,7 @@ REQUESTS_TIMEOUT = env.int("REQUESTS_TIMEOUT")
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
 }
 
 if DEBUG:
@@ -248,7 +248,6 @@ if DEBUG:
         "SHOW_TOOLBAR_CALLBACK": lambda request: True,
     }
     REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = [
-            "rest_framework.renderers.JSONRenderer",
-            "rest_framework.renderers.BrowsableAPIRenderer",
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
     ]
-

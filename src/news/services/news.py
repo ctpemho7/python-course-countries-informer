@@ -1,3 +1,4 @@
+"""Сервисный слой для работы с данными о новостях."""
 from typing import Optional
 
 from news.clients.news import NewsClient

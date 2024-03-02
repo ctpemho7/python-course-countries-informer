@@ -1,3 +1,4 @@
+"""Сервисный слой для работы с данными о городах."""
 from typing import Set
 
 from django.db.models import Q, QuerySet

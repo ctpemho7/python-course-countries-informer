@@ -1,8 +1,8 @@
+"""Сервисный слой для работы с данными о погоде."""
 from typing import Optional
 
-from geo.clients.shemas import CountryDTO, WeatherInfoDTO
+from geo.clients.shemas import WeatherInfoDTO
 from geo.clients.weather import WeatherClient
-from geo.models import Country
 
 
 class WeatherService:

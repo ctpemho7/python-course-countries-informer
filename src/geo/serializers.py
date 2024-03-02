@@ -1,3 +1,4 @@
+"""Сериализаторы приложения geo"""
 from rest_framework import serializers
 
 from geo.models import Country, City

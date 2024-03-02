@@ -1,3 +1,4 @@
+"""Сервисный слой для работы с данными о курсах валют."""
 from typing import Optional
 
 from geo.clients.currency import CurrencyClient
